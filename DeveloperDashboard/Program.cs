@@ -1,8 +1,20 @@
+using Microsoft.EntityFrameworkCore;
+using DeveloperDashboard.DataAccess;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddDbContext<DeveloperDashboardContext>(
+    options =>
+        options
+            .UseNpgsql(
+                builder.Configuration["DEVELOPERDASHBOARD_DBCONNECTIONSTRING"]
+                    ?? throw new InvalidOperationException(
+                            "Connection String 'DevDashDBNotFound' not found"
+                            )
+                    )
+                    .UseSnakeCaseNamingConvention()
+                    );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
