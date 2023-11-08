@@ -1,5 +1,6 @@
 ﻿using DeveloperDashboard.DataAccess;
 using Microsoft.AspNetCore.Mvc;
+using DeveloperDashboard.Models;
 
 namespace DeveloperDashboard.Controllers
 {
@@ -18,6 +19,12 @@ namespace DeveloperDashboard.Controllers
         }
 
         public IActionResult New()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Dashboard dashboard)
         {
             return View();
         }
