@@ -16,5 +16,10 @@ namespace DeveloperDashboard.Controllers
         {
             return View();
         }
+
+        public IActionResult New()
+        {
+            return View();
+        }
     }
 }
