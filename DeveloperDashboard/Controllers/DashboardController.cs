@@ -23,6 +23,13 @@ namespace DeveloperDashboard.Controllers
             return View();
         }
 
+        [Route("/Dashboard/{id:int}")]
+        public IActionResult Show(int id)
+        {
+            var dashboard = _context.Dashboards.Find(id);
+            return View(dashboard);
+        }
+
         [HttpPost]
         public IActionResult Create(Dashboard dashboard)
         {
