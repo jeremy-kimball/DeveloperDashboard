@@ -1,0 +1,11 @@
+﻿@model Dashboard
+
+<h1>@Model.Name</h1>
+@if(Model.Widgets != null)
+{
+    foreach(var widget in Model.Widgets)
+    {
+        <p>@widget.Name</p>
+        @Html.Partial($"{widget.Content}")
+    }
+}
