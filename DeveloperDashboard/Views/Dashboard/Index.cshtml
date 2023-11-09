@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Dashboard>
+<h1>Available Dashboards</h1>
+<ul>
+@foreach(var dashboard in Model)
+{
+        <li><a href="/Dashboard/@dashboard.Id">Dashboard: @dashboard.Name</a></li>
+}
+</ul>
