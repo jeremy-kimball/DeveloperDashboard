@@ -22,7 +22,7 @@ namespace DeveloperDashboard.Controllers
 
         public IActionResult New()
         {
-            List<Widget> widgetList = _context.Widgets.ToList();
+            var widgetList = _context.Widgets;
             ViewBag.widgetBag = new SelectList(widgetList, "Id", "Name");
             return View();
         }
@@ -35,13 +35,36 @@ namespace DeveloperDashboard.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Dashboard dashboard)
+        public async Task<IActionResult> Create(string name, int[] selectedWidgetIds)
         {
-            if(ModelState.IsValid)
+            if (selectedWidgetIds.Length == 0)
             {
-                _context.Dashboards.Add(dashboard);
-                _context.SaveChanges();
+                ModelState.AddModelError("", "You must select at least one widget.");
             }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                ModelState.AddModelError("Name", "The Name field is required.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.widgetBag = new SelectList(_context.Widgets, "Id", "Name");
+                return View();
+            }
+
+            var selectedWidgets = _context.Widgets
+                .Where(widget => selectedWidgetIds.Contains(widget.Id))
+                .ToList();
+
+            var dashboard = new Dashboard
+            {
+                Name = name,
+                Widgets = selectedWidgets
+            };
+
+            _context.Dashboards.Add(dashboard);
+            await _context.SaveChangesAsync();
+
             return Redirect($"/Dashboard/{dashboard.Id}");
         }
     }
