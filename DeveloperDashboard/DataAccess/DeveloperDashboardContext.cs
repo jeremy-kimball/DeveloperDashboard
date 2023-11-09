@@ -13,5 +13,20 @@ namespace DeveloperDashboard.DataAccess
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Widget>().HasData(
+                new Widget
+                {
+                    Id = 1,
+                    Name = "Url Shortener",
+                    Content = "_UrlShortener",
+                    Width = 2,
+                    Height = 2
+                }
+            // You can add more widgets here
+            );
+        }
     }
 }
