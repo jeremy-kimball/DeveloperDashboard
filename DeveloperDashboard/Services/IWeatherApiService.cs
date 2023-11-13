@@ -4,6 +4,6 @@ namespace DeveloperDashboard.Services
 {
     public interface IWeatherApiService
     {
-        Task<List<WeatherApiResponse>> GetWeather(string location);
+        Task<WeatherApiResponse> GetWeather(string location);
     }
 }
