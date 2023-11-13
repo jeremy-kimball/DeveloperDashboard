@@ -11,7 +11,8 @@
                 $('#linkContainer').html(partialViewResult);
             },
             error: function (xhr, status, error) {
-                // Handle errors
+                var errorMessage = "Error: " + xhr.status + " " + xhr.statusText;
+                $('#linkContainer').html(errorMessage);
             }
         });
     }
