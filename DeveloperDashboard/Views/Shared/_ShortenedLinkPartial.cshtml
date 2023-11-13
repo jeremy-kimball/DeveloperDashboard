@@ -1,0 +1,7 @@
+﻿@{
+    var stringFromViewBag = ViewBag.StringForPartial as string;
+}
+@if (!String.IsNullOrEmpty(stringFromViewBag))
+{
+    <p>Shortened Link: @stringFromViewBag</p>
+}

@@ -1,1 +1,27 @@
-﻿<h3>This is a test for a partial view (urlshortener)</h3>
+﻿<script type="text/javascript">
+    function shortenLink() {
+        var link = $('#linkInput').val();
+        var customName = $('#customNameInput').val();
+
+        $.ajax({
+            url: '@Url.Action("ShortenLink", "Widget")',
+            type: 'POST',
+            data: { link: link, customName: customName },
+            success: function (partialViewResult) {
+                $('#linkContainer').html(partialViewResult);
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = "Error: " + xhr.status + " " + xhr.statusText;
+                $('#linkContainer').html(errorMessage);
+            }
+        });
+    }
+</script>
+
+<input type="text" id="linkInput" placeholder="Enter link" />
+<input type="text" id="customNameInput" placeholder="Custom name (optional)" />
+<button onclick="shortenLink()">Shorten</button>
+
+<div id="linkContainer">
+    @Html.Partial("_ShortenedLinkPartial")
+</div>
