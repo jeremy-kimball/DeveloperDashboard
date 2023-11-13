@@ -2,6 +2,6 @@
 {
     public interface IUrlShortenerApiService
     {
-        Task<string> GetShortLink(string link, string customName);
+        Task<string> GetShortLink(string link);
     }
 }

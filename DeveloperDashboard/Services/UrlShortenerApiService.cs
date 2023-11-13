@@ -8,13 +8,13 @@
         {
             client = new HttpClient()
             {
-                BaseAddress = new Uri("https://ulvis.net")
+                BaseAddress = new Uri("http://tinyurl.com/")
             };
         }
 
-        public async Task<string> GetShortLink(string link, string customName)
+        public async Task<string> GetShortLink(string link)
         {
-            var url = string.Format("/api.php?url={0}&custom={1}", link, customName);
+            var url = string.Format("api-create.php?url={0}", link);
             string result = "";
             var response = await client.GetAsync(url);
             if(response.IsSuccessStatusCode)

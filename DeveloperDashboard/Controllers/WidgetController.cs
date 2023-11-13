@@ -16,9 +16,9 @@ namespace DeveloperDashboard.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ShortenLink(string link, string customName)
+        public async Task<ActionResult> ShortenLink(string link)
         {
-            var shortenedLink = await _urlShortenerApiService.GetShortLink(link, customName);
+            var shortenedLink = await _urlShortenerApiService.GetShortLink(link);
             Console.WriteLine(shortenedLink);
             ViewBag.StringForPartial = shortenedLink;
             return PartialView("_ShortenedLinkPartial");

@@ -6,7 +6,7 @@
         $.ajax({
             url: '@Url.Action("ShortenLink", "Widget")',
             type: 'POST',
-            data: { link: link, customName: customName },
+            data: { link: link},
             success: function (partialViewResult) {
                 $('#linkContainer').html(partialViewResult);
             },
@@ -22,7 +22,6 @@
     <div class="card-header">Url Shortener</div>
     <div class="card-body">
         <input type="text" class="form-control" id="linkInput" placeholder="Enter link" />
-        <input type="text" class="form-control" id="customNameInput" placeholder="Custom name (optional)" />
         <button class="btn btn-primary" onclick="shortenLink()">Shorten</button>
         <div id="linkContainer">
             @Html.Partial("_ShortenedLinkPartial")
