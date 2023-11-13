@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IUrlShortenerApiService, UrlShortenerApiService>();
+builder.Services.AddSingleton<IWeatherApiService, WeatherApiService>();
 builder.Services.AddDbContext<DeveloperDashboardContext>(
     options =>
         options
