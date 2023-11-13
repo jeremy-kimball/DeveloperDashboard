@@ -18,10 +18,14 @@
     }
 </script>
 
-<input type="text" id="linkInput" placeholder="Enter link" />
-<input type="text" id="customNameInput" placeholder="Custom name (optional)" />
-<button onclick="shortenLink()">Shorten</button>
-
-<div id="linkContainer">
-    @Html.Partial("_ShortenedLinkPartial")
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+    <div class="card-header">Url Shortener</div>
+    <div class="card-body">
+        <input type="text" class="form-control" id="linkInput" placeholder="Enter link" />
+        <input type="text" class="form-control" id="customNameInput" placeholder="Custom name (optional)" />
+        <button class="btn btn-primary" onclick="shortenLink()">Shorten</button>
+        <div id="linkContainer">
+            @Html.Partial("_ShortenedLinkPartial")
+        </div>
+    </div>
 </div>
