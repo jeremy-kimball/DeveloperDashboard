@@ -32,6 +32,14 @@ namespace DeveloperDashboard.DataAccess
                     Content = "_GoogleSearch",
                     Width = 2,
                     Height = 2
+                },
+                new Widget
+                {
+                    Id = 3,
+                    Name = "Weather",
+                    Content = "_Weather",
+                    Width = 2,
+                    Height = 2
                 }
             // You can add more widgets here
             );

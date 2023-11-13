@@ -4,6 +4,7 @@ using DeveloperDashboard.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
+using Newtonsoft.Json;
 
 namespace DeveloperDashboard.Controllers
 {

@@ -1,0 +1,9 @@
+﻿@{
+    var weather = ViewBag.Weather as WeatherApiResponse;
+}
+@if(weather != null)
+{
+    <p>@weather.ResolvedAddress</p>
+    <p>Todays temp: @weather.Days[0].Temp</p>
+    <p>Tomorrows temp: @weather.Days[1].Temp</p>
+}

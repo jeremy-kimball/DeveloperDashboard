@@ -1,0 +1,29 @@
+﻿<script type="text/javascript">
+    function getWeather() {
+        var location = $('#locInput').val();
+
+        $.ajax({
+            url: '@Url.Action("GetWeather", "Widget")',
+            type: 'POST',
+            data: { location: location},
+            success: function (partialViewResult) {
+                $('#weatherContainer').html(partialViewResult);
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = "Error: " + xhr.status + " " + xhr.statusText;
+                $('#weatherContainer').html(errorMessage);
+            }
+        });
+    }
+</script>
+
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+    <div class="card-header">Weather</div>
+    <div class="card-body">
+        <input type="text" class="form-control" id="locInput" placeholder="Enter location" />
+        <button class="btn btn-primary" onclick="getWeather()">Find</button>
+        <div id="weatherContainer">
+            @Html.Partial("_WeatherResult")
+        </div>
+    </div>
+</div>
