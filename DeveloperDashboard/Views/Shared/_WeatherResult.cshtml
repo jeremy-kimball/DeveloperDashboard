@@ -1,2 +1,7 @@
-﻿@model WeatherApiResponse
-<p>@Model.ResolvedAddress</p>
+﻿@{
+    var weather = ViewBag.Weather as WeatherApiResponse;
+}
+@if(weather != null)
+{
+    <p>@weather.ResolvedAddress</p>
+}

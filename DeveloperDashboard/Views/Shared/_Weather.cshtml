@@ -1,28 +1,28 @@
 ﻿<script type="text/javascript">
     function getWeather() {
-        var link = $('#locInput').val();
+        var location = $('#locInput').val();
 
         $.ajax({
             url: '@Url.Action("GetWeather", "Widget")',
             type: 'POST',
-            data: { link: link},
+            data: { location: location},
             success: function (partialViewResult) {
-                $('#linkContainer').html(partialViewResult);
+                $('#weatherContainer').html(partialViewResult);
             },
             error: function (xhr, status, error) {
                 var errorMessage = "Error: " + xhr.status + " " + xhr.statusText;
-                $('#linkContainer').html(errorMessage);
+                $('#weatherContainer').html(errorMessage);
             }
         });
     }
 </script>
 
 <div class="card border-primary mb-3" style="max-width: 20rem;">
-    <div class="card-header">Url Shortener</div>
+    <div class="card-header">Weather</div>
     <div class="card-body">
         <input type="text" class="form-control" id="locInput" placeholder="Enter location" />
         <button class="btn btn-primary" onclick="getWeather()">Find</button>
-        <div id="linkContainer">
+        <div id="weatherContainer">
             @Html.Partial("_WeatherResult")
         </div>
     </div>

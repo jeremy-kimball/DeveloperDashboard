@@ -23,7 +23,7 @@
             }
             else
             {
-                throw new HttpRequestException(response.ReasonPhrase);
+                //throw new HttpRequestException(response.ReasonPhrase);
             }
             return result;
         }
