@@ -8,7 +8,6 @@
 {
     foreach(var widget in Model.Widgets)
     {
-        <p>@widget.Name</p>
         @Html.Partial($"{widget.Content}")
     }
 }
