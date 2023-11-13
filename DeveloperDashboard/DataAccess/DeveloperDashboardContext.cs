@@ -24,6 +24,14 @@ namespace DeveloperDashboard.DataAccess
                     Content = "_UrlShortener",
                     Width = 2,
                     Height = 2
+                },
+                new Widget
+                {
+                    Id = 2,
+                    Name = "Google Search",
+                    Content = "_GoogleSearch",
+                    Width = 2,
+                    Height = 2
                 }
             // You can add more widgets here
             );
