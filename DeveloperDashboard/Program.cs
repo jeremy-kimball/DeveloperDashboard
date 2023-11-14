@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using DeveloperDashboard.DataAccess;
 using DeveloperDashboard.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DeveloperDashboardContextConnection") ?? throw new InvalidOperationException("Connection string 'DeveloperDashboardContextConnection' not found.");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -19,6 +21,9 @@ builder.Services.AddDbContext<DeveloperDashboardContext>(
                     )
                     .UseSnakeCaseNamingConvention()
                     );
+
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<DeveloperDashboardContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +38,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
