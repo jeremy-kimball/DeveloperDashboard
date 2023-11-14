@@ -13,15 +13,19 @@ namespace DeveloperDashboard.Controllers
     public class DashboardController : Controller
     {
         private readonly DeveloperDashboardContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DashboardController(DeveloperDashboardContext context)
+        public DashboardController(DeveloperDashboardContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            var dashboards = _context.Dashboards.ToList();
+            var userId = _userManager.GetUserId(User);
+            var dashboards = _context.Dashboards.Where(d => d.User.Id == userId).ToList();
             return View(dashboards);
         }
 

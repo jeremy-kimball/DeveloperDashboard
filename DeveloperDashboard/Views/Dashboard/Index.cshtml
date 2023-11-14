@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<Dashboard>
+@using Microsoft.AspNetCore.Identity
+@using DeveloperDashboard.Models
+@inject UserManager<ApplicationUser> UserManager
+
 <h1>Available Dashboards</h1>
 <style>
     #buttonCreate {
