@@ -2,6 +2,7 @@
 using DeveloperDashboard.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace DeveloperDashboard.DataAccess
 {
@@ -17,6 +18,7 @@ namespace DeveloperDashboard.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Widget>().HasData(
                 new Widget
                 {

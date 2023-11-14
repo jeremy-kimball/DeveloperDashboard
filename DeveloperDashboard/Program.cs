@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity;
 using DeveloperDashboard.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DeveloperDashboardContextConnection") ?? throw new InvalidOperationException("Connection string 'DeveloperDashboardContextConnection' not found.");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
