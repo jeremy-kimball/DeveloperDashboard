@@ -1,7 +1,24 @@
 ﻿@{
     var stringFromViewBag = ViewBag.StringForPartial as string;
 }
+
+<script>
+    function copyLink() {
+        // Get the text field
+        var copyText = document.getElementById("shortLink");
+
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        navigator.clipboard.writeText(copyText.value);
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
+
 @if (!String.IsNullOrEmpty(stringFromViewBag))
 {
-    <p>Shortened Link: <a href="@stringFromViewBag">@stringFromViewBag</a></p>
+    <div>
+        <button class="btn" onclick="copyLink()"><i class="bi bi-clipboard"></i></button>
+        <input readonly id="shortLink" value="@stringFromViewBag" />
+    </div>
 }
