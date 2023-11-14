@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using DeveloperDashboard.DataAccess;
 using DeveloperDashboard.Services;
 using Microsoft.AspNetCore.Identity;
+using DeveloperDashboard.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DeveloperDashboardContextConnection") ?? throw new InvalidOperationException("Connection string 'DeveloperDashboardContextConnection' not found.");
@@ -45,5 +46,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();
