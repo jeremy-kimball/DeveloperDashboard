@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace DeveloperDashboard.Controllers
 {
@@ -23,6 +25,7 @@ namespace DeveloperDashboard.Controllers
             return View(dashboards);
         }
 
+        [Authorize]
         public IActionResult New()
         {
             var widgetList = _context.Widgets.ToList();
@@ -38,8 +41,9 @@ namespace DeveloperDashboard.Controllers
             return View(dashboard);
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(string name, int[] selectedWidgetIds)
+        public async Task<IActionResult> Create(string name, int[] selectedWidgetIds, string userId)
         {
 
             if (!ModelState.IsValid)
@@ -50,11 +54,12 @@ namespace DeveloperDashboard.Controllers
             var selectedWidgets = _context.Widgets
                 .Where(widget => selectedWidgetIds.Contains(widget.Id))
                 .ToList();
-
+            var user = _context.Users.Find(userId);
             var dashboard = new Dashboard
             {
                 Name = name,
-                Widgets = selectedWidgets
+                Widgets = selectedWidgets,
+                User = user
             };
 
             _context.Dashboards.Add(dashboard);

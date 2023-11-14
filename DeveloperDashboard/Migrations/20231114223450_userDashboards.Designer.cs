@@ -3,6 +3,7 @@ using System;
 using DeveloperDashboard.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DeveloperDashboard.Migrations
 {
     [DbContext(typeof(DeveloperDashboardContext))]
-    partial class DeveloperDashboardContextModelSnapshot : ModelSnapshot
+    [Migration("20231114223450_userDashboards")]
+    partial class userDashboards
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,20 +133,20 @@ namespace DeveloperDashboard.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("text")
+                        .HasColumnName("application_user_id");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
-
                     b.HasKey("Id")
                         .HasName("pk_dashboards");
 
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_dashboards_user_id");
+                    b.HasIndex("ApplicationUserId")
+                        .HasDatabaseName("ix_dashboards_application_user_id");
 
                     b.ToTable("dashboards", (string)null);
                 });
@@ -394,12 +397,10 @@ namespace DeveloperDashboard.Migrations
 
             modelBuilder.Entity("DeveloperDashboard.Models.Dashboard", b =>
                 {
-                    b.HasOne("DeveloperDashboard.Models.ApplicationUser", "User")
+                    b.HasOne("DeveloperDashboard.Models.ApplicationUser", null)
                         .WithMany("Dashboards")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_dashboards_users_user_id");
-
-                    b.Navigation("User");
+                        .HasForeignKey("ApplicationUserId")
+                        .HasConstraintName("fk_dashboards_users_application_user_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
