@@ -20,8 +20,10 @@
 <div class="card border-primary mb-3" style="max-width: 20rem;">
     <div class="card-header">Weather</div>
     <div class="card-body">
-        <input type="text" class="form-control" id="locInput" placeholder="Enter location" />
-        <button class="btn btn-primary" onclick="getWeather()">Find</button>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="locInput" placeholder="Enter Location" aria-label="Location Form" aria-describedby="button-addon2">
+            <button class="btn btn-primary" type="button" onclick="getWeather()" id="button-addon2">Find</button>
+        </div>
         <div id="weatherContainer">
             @Html.Partial("_WeatherResult")
         </div>
