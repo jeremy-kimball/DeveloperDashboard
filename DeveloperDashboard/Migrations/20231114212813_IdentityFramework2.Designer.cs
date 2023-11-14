@@ -3,6 +3,7 @@ using System;
 using DeveloperDashboard.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DeveloperDashboard.Migrations
 {
     [DbContext(typeof(DeveloperDashboardContext))]
-    partial class DeveloperDashboardContextModelSnapshot : ModelSnapshot
+    [Migration("20231114212813_IdentityFramework2")]
+    partial class IdentityFramework2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,15 +138,8 @@ namespace DeveloperDashboard.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
-
                     b.HasKey("Id")
                         .HasName("pk_dashboards");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_dashboards_user_id");
 
                     b.ToTable("dashboards", (string)null);
                 });
@@ -392,16 +388,6 @@ namespace DeveloperDashboard.Migrations
                         .HasConstraintName("fk_dashboard_widget_widgets_widgets_id");
                 });
 
-            modelBuilder.Entity("DeveloperDashboard.Models.Dashboard", b =>
-                {
-                    b.HasOne("DeveloperDashboard.Models.ApplicationUser", "User")
-                        .WithMany("Dashboards")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_dashboards_users_user_id");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -457,11 +443,6 @@ namespace DeveloperDashboard.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
-                });
-
-            modelBuilder.Entity("DeveloperDashboard.Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Dashboards");
                 });
 #pragma warning restore 612, 618
         }

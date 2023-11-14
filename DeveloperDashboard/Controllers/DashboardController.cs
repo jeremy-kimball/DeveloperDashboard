@@ -5,24 +5,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace DeveloperDashboard.Controllers
 {
     public class DashboardController : Controller
     {
         private readonly DeveloperDashboardContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DashboardController(DeveloperDashboardContext context)
+        public DashboardController(DeveloperDashboardContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            var dashboards = _context.Dashboards.ToList();
+            var userId = _userManager.GetUserId(User);
+            var dashboards = _context.Dashboards.Where(d => d.User.Id == userId).ToList();
             return View(dashboards);
         }
 
+        [Authorize]
         public IActionResult New()
         {
             var widgetList = _context.Widgets.ToList();
@@ -38,8 +45,9 @@ namespace DeveloperDashboard.Controllers
             return View(dashboard);
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(string name, int[] selectedWidgetIds)
+        public async Task<IActionResult> Create(string name, int[] selectedWidgetIds, string userId)
         {
 
             if (!ModelState.IsValid)
@@ -50,11 +58,12 @@ namespace DeveloperDashboard.Controllers
             var selectedWidgets = _context.Widgets
                 .Where(widget => selectedWidgetIds.Contains(widget.Id))
                 .ToList();
-
+            var user = _context.Users.Find(userId);
             var dashboard = new Dashboard
             {
                 Name = name,
-                Widgets = selectedWidgets
+                Widgets = selectedWidgets,
+                User = user
             };
 
             _context.Dashboards.Add(dashboard);
