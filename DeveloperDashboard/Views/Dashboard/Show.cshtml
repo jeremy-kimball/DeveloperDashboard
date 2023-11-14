@@ -1,9 +1,18 @@
 ﻿@model Dashboard
-
+<style>
+    #buttonEdit {
+        position: fixed;
+        bottom: 5em;
+        right: 1em;
+    }
+</style>
 <h1>@Model.Name</h1>
-<form action="/Dashboard/@Model.Id/Edit" method="get">
-    <button type="submit" class="btn btn-primary">Edit Dashboard</button>
-</form>
+<div id="buttonEdit">
+    <form action="/Dashboard/@Model.Id/Edit" method="get">
+        <button type="submit" class="btn btn-primary"><i class="bi bi-gear-fill"></i></button>
+    </form>
+</div>
+
 @if(Model.Widgets != null)
 {
     foreach(var widget in Model.Widgets)
