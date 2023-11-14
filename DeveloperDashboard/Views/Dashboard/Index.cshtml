@@ -1,8 +1,21 @@
 ﻿@model IEnumerable<Dashboard>
 <h1>Available Dashboards</h1>
+<style>
+    #buttonCreate {
+        position: fixed;
+        bottom: 5em;
+        right: 1em;
+    }
+</style>
 <ul>
 @foreach(var dashboard in Model)
 {
         <li><a href="/Dashboard/@dashboard.Id">Dashboard: @dashboard.Name</a></li>
 }
 </ul>
+
+<div id="buttonCreate">
+    <form action="/Dashboard/New" method="get">
+        <button type="submit" class="btn btn-success myButton">Create Dashboard</button>
+    </form>
+</div>

@@ -3,7 +3,10 @@
 }
 @if(weather != null)
 {
-    <p>@weather.ResolvedAddress</p>
-    <p>Todays temp: @weather.Days[0].Temp</p>
-    <p>Tomorrows temp: @weather.Days[1].Temp</p>
+    <p>@weather.ResolvedAddress - @weather.Days[0].Temp&#176;F</p>
+    <ul>
+        <li>@weather.Days[1].GetDay() - @weather.Days[1].Temp&#176;F</li>
+        <li>@weather.Days[2].GetDay() - @weather.Days[2].Temp&#176;F</li>
+        <li>@weather.Days[3].GetDay() - @weather.Days[3].Temp&#176;F</li>
+    </ul>
 }

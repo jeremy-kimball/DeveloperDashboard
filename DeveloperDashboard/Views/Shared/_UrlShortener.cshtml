@@ -21,8 +21,10 @@
 <div class="card border-primary mb-3" style="max-width: 20rem;">
     <div class="card-header">Url Shortener</div>
     <div class="card-body">
-        <input type="text" class="form-control" id="linkInput" placeholder="Enter link" />
-        <button class="btn btn-primary" onclick="shortenLink()">Shorten</button>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="linkInput" placeholder="Enter Link" aria-label="Link Form" aria-describedby="button-addon2">
+            <button class="btn btn-primary" type="button" onclick="shortenLink()" id="button-addon2">Shorten</button>
+        </div>
         <div id="linkContainer">
             @Html.Partial("_ShortenedLinkPartial")
         </div>
