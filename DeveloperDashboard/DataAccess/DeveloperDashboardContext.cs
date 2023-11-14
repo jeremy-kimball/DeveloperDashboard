@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DeveloperDashboard.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DeveloperDashboard.DataAccess
 {
-    public class DeveloperDashboardContext : DbContext
+    public class DeveloperDashboardContext : IdentityDbContext
     {
         public DbSet<Dashboard> Dashboards { get; set; }
         public DbSet<Widget> Widgets { get; set; }
