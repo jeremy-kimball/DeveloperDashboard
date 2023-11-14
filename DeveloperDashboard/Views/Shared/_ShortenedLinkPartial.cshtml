@@ -3,5 +3,5 @@
 }
 @if (!String.IsNullOrEmpty(stringFromViewBag))
 {
-    <p>Shortened Link: @stringFromViewBag</p>
+    <p>Shortened Link: <a href="@stringFromViewBag">@stringFromViewBag</a></p>
 }
