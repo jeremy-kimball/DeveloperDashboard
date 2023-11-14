@@ -1,15 +1,18 @@
 ﻿using DeveloperDashboard.Models;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace DeveloperDashboard.Services
 {
     public class WeatherApiService : IWeatherApiService
     {
-        private static readonly HttpClient client;
+        private readonly HttpClient client;
+        private readonly IConfiguration _configuration;
 
-        static WeatherApiService()
+        public WeatherApiService(IConfiguration configuration)
         {
+            _configuration = configuration;
             client = new HttpClient()
             {
                 BaseAddress = new Uri("https://weather.visualcrossing.com/")
@@ -18,7 +21,8 @@ namespace DeveloperDashboard.Services
 
         public async Task<WeatherApiResponse> GetWeather(string location)
         {
-            var url = string.Format("VisualCrossingWebServices/rest/services/timeline/{0}?unitGroup=us&elements=datetime%2Ctempmax%2Ctempmin%2Ctemp&include=days&key=YPVGFDDDN9GB42Y35ZRPPHJQA&contentType=json", location);
+            var apikey = _configuration["WEATHERAPIKEY"];
+            var url = string.Format("VisualCrossingWebServices/rest/services/timeline/{0}?unitGroup=us&elements=datetime%2Ctempmax%2Ctempmin%2Ctemp&include=days&key={1}&contentType=json", location, apikey);
             var result = new WeatherApiResponse();
             var response = await client.GetAsync(url);
             if (response.IsSuccessStatusCode)
@@ -36,3 +40,4 @@ namespace DeveloperDashboard.Services
         }
     }
 }
+
