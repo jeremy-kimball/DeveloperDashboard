@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DeveloperDashboard.DataAccess
 {
-    public class DeveloperDashboardContext : IdentityDbContext
+    public class DeveloperDashboardContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Dashboard> Dashboards { get; set; }
         public DbSet<Widget> Widgets { get; set; }
