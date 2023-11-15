@@ -7,6 +7,7 @@ using DeveloperDashboard.DataAccess;
 using DeveloperDashboard.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
@@ -15,13 +16,9 @@ namespace DeveloperDashboard.Testing
     public class DashboardControllerTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly WebApplicationFactory<Program> _factory;
-        private readonly Mock<UserManager<ApplicationUser>> _mockUserManager;
 
         public DashboardControllerTests(WebApplicationFactory<Program> factory)
         {
-            _mockUserManager = new Mock<UserManager<ApplicationUser>>(
-            new Mock<IUserStore<ApplicationUser>>().Object,
-            null, null, null, null, null, null, null, null);
             _factory = factory;
         }
 
@@ -37,10 +34,93 @@ namespace DeveloperDashboard.Testing
             return context;
         }
 
-        [Fact]
-        public void Test1()
-        {
+        //[Fact]
+        //public async void Dashboard_Index_ShowsAllUsersDashboards()
+        //{
+            ////Arrange
+            //var context = GetDbContext();
+            //var client = _factory.CreateClient();
 
+            //var response = await client.GetAsync("/albums/1");
+            //var html = await response.Content.ReadAsStringAsync();
+
+            //var store = new Mock<IUserStore<ApplicationUser>>();
+            //var userManager = new UserManager<ApplicationUser>(
+            //    store.Object, null, null, null, null, null, null, null, null);
+
+            //var urlWidget = new Widget
+            //{
+            //    Id = 1,
+            //    Name = "Url Shortener",
+            //    Content = "_UrlShortener",
+            //    Width = 2,
+            //    Height = 2
+            //};
+            //var widgetList = new List<Widget>();
+            //widgetList.Add(urlWidget);
+
+            //var testUser = new ApplicationUser();
+
+            //var dashboard = new Dashboard
+            //{
+            //    Id = 1,
+            //    Name = "TestDash",
+            //    Widgets = widgetList
+            //};
+            //testUser.Dashboards.Add(dashboard);
+
+            //context.SaveChanges();
+
+            //var creationResult = await userManager.CreateAsync(testUser);
+            //if (!creationResult.Succeeded)
+            //{
+            //    throw new InvalidOperationException("Could not create test user in setup.");
+            //}
+
+
+
+            //response.EnsureSuccessStatusCode();
+        //}
+
+        [Fact]
+        public async void Dashboard_Index_ShowsAllUsersDashboards()
+        {
+            var context = GetDbContext();
+            var client = _factory.CreateClient();
+
+            var store = new Mock<IUserStore<ApplicationUser>>();
+            var userManager = new UserManager<ApplicationUser>(
+                store.Object, null, null, null, null, null, null, null, null);
+
+            var urlWidget = new Widget
+            {
+                Id = 1,
+                Name = "Url Shortener",
+                Content = "_UrlShortener",
+                Width = 2,
+                Height = 2
+            };
+            var widgetList = new List<Widget>();
+            widgetList.Add(urlWidget);
+
+            var testUser = new ApplicationUser();
+
+            var dashboard = new Dashboard
+            {
+                Id = 1,
+                User = testUser,
+                Name = "TestDash",
+                Widgets = widgetList
+            };
+            await userManager.CreateAsync(testUser);
+            context.SaveChanges();
+
+            var dashboards = context.Dashboards.Where(d => d.User.Id == testUser.Id).ToList();
+
+            var response = await client.GetAsync("/Dashboard");
+            var html = await response.Content.ReadAsStringAsync();
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }
