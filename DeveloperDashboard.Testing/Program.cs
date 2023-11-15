@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using DeveloperDashboard.Controllers;
 using DeveloperDashboard.DataAccess;
+using DeveloperDashboard.Models;
 
 namespace DeveloperDashboard.Testing
 {
@@ -30,11 +31,16 @@ namespace DeveloperDashboard.Testing
                              options.UseInMemoryDatabase("TestDatabase"));
                         services.AddControllersWithViews()
                             .AddApplicationPart(typeof(HomeController).Assembly);
+                        services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                            .AddEntityFrameworkStores<DeveloperDashboardContext>();
+
                     });
 
                     webBuilder.Configure(app =>
                     {
                         app.UseRouting();
+                        app.UseAuthentication();
+                        app.UseAuthorization();
                         app.UseEndpoints(endpoints =>
                         {
                             endpoints.MapControllerRoute(
