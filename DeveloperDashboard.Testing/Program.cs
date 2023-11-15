@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using DeveloperDashboard.Controllers;
+using DeveloperDashboard.DataAccess;
 
 namespace DeveloperDashboard.Testing
 {
@@ -24,6 +26,8 @@ namespace DeveloperDashboard.Testing
                 {
                     webBuilder.ConfigureServices(services =>
                     {
+                        services.AddDbContext<DeveloperDashboardContext>(options =>
+                             options.UseInMemoryDatabase("TestDatabase"));
                         services.AddControllersWithViews()
                             .AddApplicationPart(typeof(HomeController).Assembly);
                     });
