@@ -1,8 +1,9 @@
-# Developer Dashboard
+#  Developer Dashboard 🚧 WIP 🚧
+
 My project is called Developer Dashboard, the idea to put it simply is to emulate the idea of a home screen from something like your phone, providing widgets with useful information or tools, but in a web format. It’s intended to be used as your home page and hopefully improve your workflow or productivity.
 ### Project Context
 * Solo Project
-* Total work-time: ~ 20 Hours
+* MVP work-time: ~ 20 Hours
 
 ![image](https://github.com/jeremy-kimball/DeveloperDashboard/assets/130601077/f6c3c798-7e32-4c76-9eac-c5dcfae42eb5)
 <details>
