@@ -14,10 +14,7 @@ builder.Services.AddDbContext<DeveloperDashboardContext>(
     options =>
         options
             .UseNpgsql(
-                builder.Configuration["DEVELOPERDASHBOARD_DBCONNECTIONSTRING"]
-                    ?? throw new InvalidOperationException(
-                            "Connection String 'DevDashDBNotFound' not found"
-                            )
+                ConnectionHelper.GetConnectionString(builder.Configuration)
                     )
                     .UseSnakeCaseNamingConvention()
                     );
