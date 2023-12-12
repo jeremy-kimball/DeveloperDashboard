@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperDashboard", "DeveloperDashboard\DeveloperDashboard.csproj", "{B845FC93-868D-4B21-9A38-2A907EC7F373}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperDashboard", "DeveloperDashboard.csproj", "{B845FC93-868D-4B21-9A38-2A907EC7F373}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperDashboard.Testing", "DeveloperDashboard.Testing\DeveloperDashboard.Testing.csproj", "{37AC910A-90EA-4A93-9EE7-430468A436A4}"
 EndProject
