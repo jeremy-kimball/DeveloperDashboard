@@ -25,7 +25,8 @@ builder.Services.AddDbContext<DeveloperDashboardContext>(
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DeveloperDashboardContext>();
 var app = builder.Build();
-
+var scope = app.Services.CreateScope();
+await DataHelper.ManageDataAsync(scope.ServiceProvider);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
