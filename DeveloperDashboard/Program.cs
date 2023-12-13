@@ -4,6 +4,8 @@ using DeveloperDashboard.Services;
 using Microsoft.AspNetCore.Identity;
 using DeveloperDashboard.Models;
 
+string connectionString = $"Server={Environment.GetEnvironmentVariable("DATABASE_URL")};Database={Environment.GetEnvironmentVariable("POSTGRES_DB")};Port={Environment.GetEnvironmentVariable("PGPORT")};Username={Environment.GetEnvironmentVariable("POSTGRES_USER")};Password={Environment.GetEnvironmentVariable("POSTGRES_PASSWORD")}";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,10 +16,14 @@ builder.Services.AddDbContext<DeveloperDashboardContext>(
     options =>
         options
             .UseNpgsql(
-                ConnectionHelper.GetConnectionString(builder.Configuration)
+                connectionString
+                    ?? throw new InvalidOperationException(
+                            "Connection String 'DevDashDBNotFound' not found"
+                            )
                     )
                     .UseSnakeCaseNamingConvention()
                     );
+
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DeveloperDashboardContext>();
