@@ -16,7 +16,7 @@ public static class ConnectionHelper
         var builder = new NpgsqlConnectionStringBuilder
         {
             Host = Environment.GetEnvironmentVariable("PGHOST"),
-            Port = Environment.GetEnvironmentVariable("PGPORT"),
+            Port = Convert.ToInt32(Environment.GetEnvironmentVariable("PGPORT")),
             Username = Environment.GetEnvironmentVariable("PGUSER"),
             Password = Environment.GetEnvironmentVariable("PGPASSWORD"),
             Database = Environment.GetEnvironmentVariable("DATABASE_URL"),
