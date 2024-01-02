@@ -3,6 +3,7 @@ using DeveloperDashboard.DataAccess;
 using DeveloperDashboard.Services;
 using Microsoft.AspNetCore.Identity;
 using DeveloperDashboard.Models;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,17 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IUrlShortenerApiService, UrlShortenerApiService>();
 builder.Services.AddSingleton<IWeatherApiService, WeatherApiService>();
+
+var postgresConnectionString = new NpgsqlConnectionStringBuilder
+{
+    Host = builder.Configuration["PGHOST"] ?? throw new InvalidOperationException("Database host (PGHOST) not found."),
+    Database = builder.Configuration["PGDATABASE"] ?? throw new InvalidOperationException("Database name (PGDATABASE) not found."),
+    Port = int.Parse(builder.Configuration["PGPORT"] ?? throw new InvalidOperationException("Database port (PGPORT) not found.")),
+    Username = builder.Configuration["PGUSER"] ?? throw new InvalidOperationException("Database username (PGUSER) not found."),
+    Password = builder.Configuration["PGPASSWORD"] ?? throw new InvalidOperationException("Database password (PGPASSWORD) not found.")
+}.ConnectionString;
+
 builder.Services.AddDbContext<DeveloperDashboardContext>(
-    options =>
-        options
-            .UseNpgsql(
-                builder.Configuration["DEVELOPERDASHBOARD_DBCONNECTIONSTRING"]
-                    ?? throw new InvalidOperationException(
-                            "Connection String 'DevDashDBNotFound' not found"
-                            )
-                    )
-                    .UseSnakeCaseNamingConvention()
-                    );
+    options => options.UseNpgsql(postgresConnectionString).UseSnakeCaseNamingConvention()
+);
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DeveloperDashboardContext>();
