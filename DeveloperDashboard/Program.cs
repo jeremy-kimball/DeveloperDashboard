@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using DeveloperDashboard.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-string DEVELOPERDASHBOARD_DBCONNECTIONSTRING = $"Server={Environment.GetEnvironmentVariable("DATABASE_URL")};Database={Environment.GetEnvironmentVariable("PGDATABASE")};Port={Environment.GetEnvironmentVariable("PGPORT")};Username={Environment.GetEnvironmentVariable("PGUSER")};Password={Environment.GetEnvironmentVariable("PGPASSWORD")}";
+string DEVELOPERDASHBOARD_DBCONNECTIONSTRING = $"Server={Environment.GetEnvironmentVariable("PGHOST")};Database={Environment.GetEnvironmentVariable("DATABASE_URL")};Port={Environment.GetEnvironmentVariable("PGPORT")};Username={Environment.GetEnvironmentVariable("PGUSER")};Password={Environment.GetEnvironmentVariable("PGPASSWORD")}";
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
