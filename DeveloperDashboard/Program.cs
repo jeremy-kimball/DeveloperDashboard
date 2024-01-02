@@ -14,11 +14,11 @@ builder.Services.AddSingleton<IWeatherApiService, WeatherApiService>();
 
 var postgresConnectionString = new NpgsqlConnectionStringBuilder
 {
-    Host = builder.Configuration["PGHOST"] ?? throw new InvalidOperationException("Database host (PGHOST) not found."),
-    Database = builder.Configuration["PGDATABASE"] ?? throw new InvalidOperationException("Database name (PGDATABASE) not found."),
-    Port = int.Parse(builder.Configuration["PGPORT"] ?? throw new InvalidOperationException("Database port (PGPORT) not found.")),
-    Username = builder.Configuration["PGUSER"] ?? throw new InvalidOperationException("Database username (PGUSER) not found."),
-    Password = builder.Configuration["PGPASSWORD"] ?? throw new InvalidOperationException("Database password (PGPASSWORD) not found.")
+    Host = Environment.GetEnvironmentVariable("PGHOST") ?? throw new InvalidOperationException("Database host (PGHOST) not found."),
+    Database = Environment.GetEnvironmentVariable("PGDATABASE") ?? throw new InvalidOperationException("Database name (PGDATABASE) not found."),
+    Port = int.Parse(Environment.GetEnvironmentVariable("PGPORT") ?? throw new InvalidOperationException("Database port (PGPORT) not found.")),
+    Username = Environment.GetEnvironmentVariable("PGUSER") ?? throw new InvalidOperationException("Database username (PGUSER) not found."),
+    Password = Environment.GetEnvironmentVariable("PGPASSWORD") ?? throw new InvalidOperationException("Database password (PGPASSWORD) not found.")
 }.ConnectionString;
 
 builder.Services.AddDbContext<DeveloperDashboardContext>(
