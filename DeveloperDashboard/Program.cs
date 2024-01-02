@@ -3,9 +3,10 @@ using DeveloperDashboard.DataAccess;
 using DeveloperDashboard.Services;
 using Microsoft.AspNetCore.Identity;
 using DeveloperDashboard.Models;
+using DeveloperDashboard.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
-string DEVELOPERDASHBOARD_DBCONNECTIONSTRING = $"Server={Environment.GetEnvironmentVariable("PGHOST")};Database={Environment.GetEnvironmentVariable("PGDATABASE")};Port={Environment.GetEnvironmentVariable("PGPORT")};Username={Environment.GetEnvironmentVariable("PGUSER")};Password={Environment.GetEnvironmentVariable("PGPASSWORD")}";
+//string DEVELOPERDASHBOARD_DBCONNECTIONSTRING = $"Server={Environment.GetEnvironmentVariable("PGHOST")};Database={Environment.GetEnvironmentVariable("PGDATABASE")};Port={Environment.GetEnvironmentVariable("PGPORT")};Username={Environment.GetEnvironmentVariable("PGUSER")};Password={Environment.GetEnvironmentVariable("PGPASSWORD")}";
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -14,7 +15,7 @@ builder.Services.AddSingleton<IWeatherApiService, WeatherApiService>();
 builder.Services.AddDbContext<DeveloperDashboardContext>(
     options =>
         options
-            .UseNpgsql(DEVELOPERDASHBOARD_DBCONNECTIONSTRING
+            .UseNpgsql(ConnectionHelper.GetConnectionString()
                     ?? throw new InvalidOperationException(
                             "Connection String 'DevDashDBNotFound' not found"
                             )
@@ -25,9 +26,12 @@ builder.Services.AddDbContext<DeveloperDashboardContext>(
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DeveloperDashboardContext>();
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
+    //Service: An instance of db context
     var dbContext = scope.ServiceProvider.GetRequiredService<DeveloperDashboardContext>();
+    //Migration: This is the programmatic equivalent to Update-Database
     dbContext.Database.Migrate();
 }
 // Configure the HTTP request pipeline.
