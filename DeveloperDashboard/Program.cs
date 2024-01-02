@@ -14,8 +14,7 @@ builder.Services.AddSingleton<IWeatherApiService, WeatherApiService>();
 builder.Services.AddDbContext<DeveloperDashboardContext>(
     options =>
         options
-            .UseNpgsql(
-                builder.Configuration[DEVELOPERDASHBOARD_DBCONNECTIONSTRING]
+            .UseNpgsql(DEVELOPERDASHBOARD_DBCONNECTIONSTRING
                     ?? throw new InvalidOperationException(
                             "Connection String 'DevDashDBNotFound' not found"
                             )
