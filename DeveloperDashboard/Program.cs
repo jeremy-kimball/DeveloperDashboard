@@ -3,10 +3,9 @@ using DeveloperDashboard.DataAccess;
 using DeveloperDashboard.Services;
 using Microsoft.AspNetCore.Identity;
 using DeveloperDashboard.Models;
+using DeveloperDashboard.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
-string DEVELOPERDASHBOARD_DBCONNECTIONSTRING = $"Server={Environment.GetEnvironmentVariable("PGHOST")};Database={Environment.GetEnvironmentVariable("DATABASE_URL")};Port={Environment.GetEnvironmentVariable("PGPORT")};Username={Environment.GetEnvironmentVariable("POSTGRES_USER")};Password={Environment.GetEnvironmentVariable("PGPASSWORD")}";
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IUrlShortenerApiService, UrlShortenerApiService>();
@@ -14,7 +13,7 @@ builder.Services.AddSingleton<IWeatherApiService, WeatherApiService>();
 builder.Services.AddDbContext<DeveloperDashboardContext>(
     options =>
         options
-            .UseNpgsql(DEVELOPERDASHBOARD_DBCONNECTIONSTRING
+            .UseNpgsql(ConnectionHelper.getConnectionString()
                     ?? throw new InvalidOperationException(
                             "Connection String 'DevDashDBNotFound' not found"
                             )
