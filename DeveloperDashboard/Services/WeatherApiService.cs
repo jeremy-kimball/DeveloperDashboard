@@ -21,7 +21,8 @@ namespace DeveloperDashboard.Services
 
         public async Task<WeatherApiResponse> GetWeather(string location)
         {
-            var apikey = _configuration["WEATHERAPIKEY"];
+            //retrieve api key based on local or deployed
+            string apikey = Environment.GetEnvironmentVariable("WEATHERAPIKEY") == null ? _configuration["WEATHERAPIKEY"] : Environment.GetEnvironmentVariable("WEATHERAPIKEY");
             var url = string.Format("VisualCrossingWebServices/rest/services/timeline/{0}?unitGroup=us&elements=datetime%2Ctempmax%2Ctempmin%2Ctemp&include=days&key={1}&contentType=json", location, apikey);
             var result = new WeatherApiResponse();
             var response = await client.GetAsync(url);
