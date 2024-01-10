@@ -1,26 +1,72 @@
 ﻿@model Dashboard
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
-<script>
+<script type="text/javascript">
+    var gridStackInstance;
+
     document.addEventListener('DOMContentLoaded', function () {
-        GridStack.init();
+        gridStackInstance = GridStack.init({
+            minRow: 10
+        });
+        console.log("GridStack instance:", gridStackInstance);
     });
+
+    function lock() {
+        if (!gridStackInstance) {
+            console.error("GridStack instance is not initialized");
+            return;
+        }
+        gridStackInstance.movable('.grid-stack-item', false);
+        document.getElementById('buttonLock').style.visibility = 'hidden';
+        document.getElementById('buttonUnlock').style.visibility = 'visible';
+    }
+    function unlock() {
+        if (!gridStackInstance) {
+            console.error("GridStack instance is not initialized");
+            return;
+        }
+        gridStackInstance.movable('.grid-stack-item', true);
+        document.getElementById('buttonUnlock').style.visibility = 'hidden';
+        document.getElementById('buttonLock').style.visibility = 'visible';
+    }
 </script>
 
 
+
 <style>
-    #buttonEdit {
+    #buttonEdit{
         position: fixed;
         bottom: 5em;
         right: 1em;
     }
+    #buttonLock{
+        position:fixed;
+        bottom:2.5em;
+        right:1em;
+    }
+    #buttonUnlock {
+        position: fixed;
+        bottom: 2.5em;
+        right: 1em;
+        visibility: hidden; /* Initially hidden */
+    }
 </style>
+
 <h1 style="text-align:center;">@Model.Name</h1>
 <hr></hr>
 <div id="buttonEdit">
     <form action="/Dashboard/@Model.Id/Edit" method="get">
         <button type="submit" class="btn btn-primary"><i class="bi bi-gear-fill"></i></button>
     </form>
+</div>
+
+<!-- unlock and lock grid -->
+<div id="buttonLock">
+    <button onclick="lock()" class="btn btn-primary"><i class="bi bi-unlock-fill"></i></button>
+</div>
+<div id="buttonUnlock">
+    <button onclick="unlock()" class="btn btn-primary"><i class="bi bi-lock-fill"></i></button>
 </div>
 
 @if(Model.Widgets != null)
@@ -31,11 +77,12 @@
                 foreach (var widget in Model.Widgets)
                 {
                 <div class="grid-stack-item"
-                         gs-size-to-content="true"
-                         data-gs-x="@widget.X"
-                         data-gs-y="@widget.Y"
-                         data-gs-width="@widget.W"
-                         data-gs-height="@widget.H">
+                         @Html.Raw(widget.Properties)
+                         gs-locked="true"
+                         gs-x="@widget.X"
+                         gs-y="@widget.Y"
+                         gs-w="@widget.W"
+                         gs-h="@widget.H">
                         <div class="grid-stack-item-content">
                             @Html.Partial($"{widget.Content}")
                         </div>

@@ -26,6 +26,8 @@ namespace DeveloperDashboard.Models
         [JsonProperty(Order = -5)]
         public int Y { get; set; }
         [JsonIgnore]
+        public string Properties { get; set; }
+        [JsonIgnore]
         public List<Dashboard> Dashboards { get; set; }
     }
 }
