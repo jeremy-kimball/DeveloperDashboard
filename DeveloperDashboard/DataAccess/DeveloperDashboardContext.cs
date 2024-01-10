@@ -25,7 +25,7 @@ namespace DeveloperDashboard.DataAccess
                     Id = 1,
                     Name = "Url Shortener",
                     Content = "_UrlShortener",
-                    W = 2,
+                    W = 4,
                     H = 2
                 },
                 new Widget
@@ -33,7 +33,7 @@ namespace DeveloperDashboard.DataAccess
                     Id = 2,
                     Name = "Google Search",
                     Content = "_GoogleSearch",
-                    W = 2,
+                    W = 8,
                     H = 2
                 },
                 new Widget
@@ -41,8 +41,8 @@ namespace DeveloperDashboard.DataAccess
                     Id = 3,
                     Name = "Weather",
                     Content = "_Weather",
-                    W = 2,
-                    H = 2
+                    W = 4,
+                    H = 8
                 }
             // You can add more widgets here
             );

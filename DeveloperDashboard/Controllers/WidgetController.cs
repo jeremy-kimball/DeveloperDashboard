@@ -15,6 +15,11 @@ namespace DeveloperDashboard.Controllers
             _weatherApiService = weatherApiService;
         }
 
+        public IActionResult GetWidgetContent(string widgetContent)
+        {
+            return PartialView(widgetContent);
+        }
+
         [HttpPost]
         public async Task<ActionResult> ShortenLink(string link)
         {

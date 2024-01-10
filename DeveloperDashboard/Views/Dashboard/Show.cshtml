@@ -1,4 +1,13 @@
 ﻿@model Dashboard
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        GridStack.init();
+    });
+</script>
+
+
 <style>
     #buttonEdit {
         position: fixed;
@@ -14,14 +23,24 @@
     </form>
 </div>
 
-<div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 20px;">
 @if(Model.Widgets != null)
 {
-    foreach(var widget in Model.Widgets)
-    {
-        @Html.Partial($"{widget.Content}")
-    }
+        <div class="grid-stack">
+            @if (Model.Widgets != null)
+            {
+                foreach (var widget in Model.Widgets)
+                {
+                <div class="grid-stack-item"
+                         gs-size-to-content="true"
+                         data-gs-x="@widget.X"
+                         data-gs-y="@widget.Y"
+                         data-gs-width="@widget.W"
+                         data-gs-height="@widget.H">
+                        <div class="grid-stack-item-content">
+                            @Html.Partial($"{widget.Content}")
+                        </div>
+                    </div>
+                }
+            }
+        </div>
 }
-
-<p>@Model.SerializeWidgets()</p>
-</div>
