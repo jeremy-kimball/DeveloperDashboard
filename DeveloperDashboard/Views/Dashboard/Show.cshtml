@@ -76,7 +76,7 @@
             {
                 foreach (var widget in Model.Widgets)
                 {
-                <div class="grid-stack-item"
+                <div class="grid-stack-item" id="@widget.Name"
                          @Html.Raw(widget.Properties)
                          gs-locked="true"
                          gs-x="@widget.X"

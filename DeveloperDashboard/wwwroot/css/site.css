@@ -16,3 +16,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+#Weather {
+    background-color: red;
+}
+#Url_Shortener {
+    background-color: green;
+}
+#Google_Search {
+    background-color: blue;
+}

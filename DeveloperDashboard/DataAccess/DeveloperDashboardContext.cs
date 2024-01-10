@@ -23,7 +23,7 @@ namespace DeveloperDashboard.DataAccess
                 new Widget
                 {
                     Id = 1,
-                    Name = "Url Shortener",
+                    Name = "Url_Shortener",
                     Content = "_UrlShortener",
                     W = 5,
                     H = 2,
@@ -32,7 +32,7 @@ namespace DeveloperDashboard.DataAccess
                 new Widget
                 {
                     Id = 2,
-                    Name = "Google Search",
+                    Name = "Google_Search",
                     Content = "_GoogleSearch",
                     W = 8,
                     H = 1,
