@@ -5,7 +5,12 @@ using Microsoft.AspNetCore.Identity;
 using DeveloperDashboard.Models;
 using DeveloperDashboard.Helper;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
+{
+    Args = args,
+    ContentRootPath = "/app/out",
+    WebRootPath = "wwwroot",
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IUrlShortenerApiService, UrlShortenerApiService>();
