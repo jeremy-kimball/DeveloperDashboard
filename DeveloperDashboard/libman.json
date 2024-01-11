@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "provider": "cdnjs",
+      "library": "gridstack.js@10.0.1",
+      "destination": "wwwroot/lib/gridstack.js/"
+    }
+  ]
+}

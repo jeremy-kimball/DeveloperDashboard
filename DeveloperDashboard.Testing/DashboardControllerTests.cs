@@ -97,8 +97,8 @@ namespace DeveloperDashboard.Testing
                 Id = 1,
                 Name = "Url Shortener",
                 Content = "_UrlShortener",
-                Width = 2,
-                Height = 2
+                W = 2,
+                H = 2
             };
             var widgetList = new List<Widget>();
             widgetList.Add(urlWidget);

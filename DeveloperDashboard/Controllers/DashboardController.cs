@@ -7,6 +7,8 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing.Template;
+using System.Security.Cryptography;
 
 namespace DeveloperDashboard.Controllers
 {
@@ -58,11 +60,31 @@ namespace DeveloperDashboard.Controllers
             var selectedWidgets = _context.Widgets
                 .Where(widget => selectedWidgetIds.Contains(widget.Id))
                 .ToList();
+
+            var widgetCopies = new List<Widget>();
+
+            foreach(var widget in selectedWidgets)
+            {
+                var widgetCopy = new Widget()
+                {
+                    Template = false,
+                    Name = widget.Name,
+                    Content = widget.Content,
+                    W = widget.W,
+                    H = widget.H,
+                    X = widget.X,
+                    Y = widget.Y,
+                    Properties = widget.Properties
+                };
+
+                widgetCopies.Add(widgetCopy);
+            }
+
             var user = _context.Users.Find(userId);
             var dashboard = new Dashboard
             {
                 Name = name,
-                Widgets = selectedWidgets,
+                Widgets = widgetCopies,
                 User = user
             };
 
@@ -100,6 +122,31 @@ namespace DeveloperDashboard.Controllers
             _context.SaveChanges();
 
             return Redirect($"/Dashboard/{dashboardToUpdate.Id}");
+        }
+
+        [HttpPost]
+        [Route("/Dashboard/{id:int}/Save")]
+        public IActionResult Save(int id, string serializedData)
+        {
+            var positions = JsonConvert.DeserializeObject<List<PositionModel>>(serializedData);
+            var dashboardToUpdate = _context.Dashboards.Include(d => d.Widgets).First(d => d.Id == id);
+            foreach(var widget in dashboardToUpdate.Widgets)
+            {
+                foreach(var position in positions)
+                {
+                    if (position.Id == widget.Id)
+                    {
+                        widget.W = position.W;
+                        widget.H = position.H;
+                        widget.X = position.X;
+                        widget.Y = position.Y;
+                    }
+                }
+            }
+            _context.Dashboards.Update(dashboardToUpdate);
+            _context.SaveChanges();
+
+            return Redirect($"/Dashboard/{id}");
         }
 
         [HttpPost]

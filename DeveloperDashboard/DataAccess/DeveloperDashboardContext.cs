@@ -23,26 +23,32 @@ namespace DeveloperDashboard.DataAccess
                 new Widget
                 {
                     Id = 1,
-                    Name = "Url Shortener",
+                    Name = "Url_Shortener",
                     Content = "_UrlShortener",
-                    Width = 2,
-                    Height = 2
+                    W = 5,
+                    H = 2,
+                    Properties = "gs-no-resize=\"true\"",
+                    Template = true
                 },
                 new Widget
                 {
                     Id = 2,
-                    Name = "Google Search",
+                    Name = "Google_Search",
                     Content = "_GoogleSearch",
-                    Width = 2,
-                    Height = 2
+                    W = 8,
+                    H = 1,
+                    Properties = "gs-no-resize=\"true\"",
+                    Template = true
                 },
                 new Widget
                 {
                     Id = 3,
                     Name = "Weather",
                     Content = "_Weather",
-                    Width = 2,
-                    Height = 2
+                    W = 4,
+                    H = 3,
+                    Properties = "gs-no-resize=\"true\"",
+                    Template = true,
                 }
             // You can add more widgets here
             );

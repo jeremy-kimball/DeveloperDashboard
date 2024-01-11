@@ -3,6 +3,7 @@ using System;
 using DeveloperDashboard.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DeveloperDashboard.Migrations
 {
     [DbContext(typeof(DeveloperDashboardContext))]
-    partial class DeveloperDashboardContextModelSnapshot : ModelSnapshot
+    [Migration("20240110213632_addProperties")]
+    partial class addProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,10 +179,6 @@ namespace DeveloperDashboard.Migrations
                         .HasColumnType("text")
                         .HasColumnName("properties");
 
-                    b.Property<bool>("Template")
-                        .HasColumnType("boolean")
-                        .HasColumnName("template");
-
                     b.Property<int>("W")
                         .HasColumnType("integer")
                         .HasColumnName("w");
@@ -203,9 +202,8 @@ namespace DeveloperDashboard.Migrations
                             Id = 1,
                             Content = "_UrlShortener",
                             H = 2,
-                            Name = "Url_Shortener",
+                            Name = "Url Shortener",
                             Properties = "gs-no-resize=\"true\"",
-                            Template = true,
                             W = 5,
                             X = 0,
                             Y = 0
@@ -215,9 +213,8 @@ namespace DeveloperDashboard.Migrations
                             Id = 2,
                             Content = "_GoogleSearch",
                             H = 1,
-                            Name = "Google_Search",
+                            Name = "Google Search",
                             Properties = "gs-no-resize=\"true\"",
-                            Template = true,
                             W = 8,
                             X = 0,
                             Y = 0
@@ -229,7 +226,6 @@ namespace DeveloperDashboard.Migrations
                             H = 3,
                             Name = "Weather",
                             Properties = "gs-no-resize=\"true\"",
-                            Template = true,
                             W = 4,
                             X = 0,
                             Y = 0
