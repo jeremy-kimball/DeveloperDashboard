@@ -34,7 +34,7 @@ namespace DeveloperDashboard.Controllers
         [Authorize]
         public IActionResult New()
         {
-            var widgetList = _context.Widgets.ToList();
+            var widgetList = _context.Widgets.Where(w => w.Template == true).ToList();
             ViewBag.widgetBag = widgetList;
 
             return View();
