@@ -10,8 +10,17 @@
         gridStackInstance = GridStack.init({
             minRow: 10
         });
-        console.log("GridStack instance:", gridStackInstance);
+        //for debug
+        //console.log("GridStack instance:", gridStackInstance);
+
+        // start with grid locked
+        gridStackInstance.movable('.grid-stack-item', false);
+        // and show the grid lock button correctly
+        document.getElementById('buttonLock').style.visibility = 'hidden';
+        document.getElementById('buttonUnlock').style.visibility = 'visible';
     });
+
+
 
     function lock() {
         if (!gridStackInstance) {
@@ -34,7 +43,7 @@
     function save() {
 
         serializedData = gridStackInstance.save();
-        document.querySelector('#saved-data').value = JSON.stringify(serializedData, null, '  ');
+        //document.querySelector('#saved-data').value = JSON.stringify(serializedData, null, '  ');
 
         $.ajax({
             url: '/Dashboard/' + @Model.Id + '/Save',
