@@ -27,7 +27,8 @@ namespace DeveloperDashboard.DataAccess
                     Content = "_UrlShortener",
                     W = 5,
                     H = 2,
-                    Properties = "gs-no-resize=\"true\""
+                    Properties = "gs-no-resize=\"true\"",
+                    Template = true
                 },
                 new Widget
                 {
@@ -36,7 +37,8 @@ namespace DeveloperDashboard.DataAccess
                     Content = "_GoogleSearch",
                     W = 8,
                     H = 1,
-                    Properties = "gs-no-resize=\"true\""
+                    Properties = "gs-no-resize=\"true\"",
+                    Template = true
                 },
                 new Widget
                 {
@@ -45,7 +47,8 @@ namespace DeveloperDashboard.DataAccess
                     Content = "_Weather",
                     W = 4,
                     H = 3,
-                    Properties = "gs-no-resize=\"true\""
+                    Properties = "gs-no-resize=\"true\"",
+                    Template = true,
                 }
             // You can add more widgets here
             );

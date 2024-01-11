@@ -4,6 +4,7 @@
 
 <script type="text/javascript">
     var gridStackInstance;
+    var serializedData;
 
     document.addEventListener('DOMContentLoaded', function () {
         gridStackInstance = GridStack.init({
@@ -30,31 +31,60 @@
         document.getElementById('buttonUnlock').style.visibility = 'hidden';
         document.getElementById('buttonLock').style.visibility = 'visible';
     }
+    function save() {
+
+        serializedData = gridStackInstance.save();
+        document.querySelector('#saved-data').value = JSON.stringify(serializedData, null, '  ');
+
+        $.ajax({
+            url: '/Dashboard/' + @Model.Id + '/Save',
+            type: 'POST',
+            data: { 
+                serializedData: JSON.stringify(serializedData, null, '  '),
+                id: @Model.Id
+            },
+            success: function () {
+                alert("Grid Saved!");
+            },
+            error: function (xhr, status, error) {
+                var errorMessage = "Error: " + xhr.status + " " + xhr.statusText;
+                $('#linkContainer').html(errorMessage);
+            }
+        });
+    }
+
+
 </script>
-
-
 
 <style>
     #buttonEdit{
         position: fixed;
-        bottom: 5em;
+        bottom: 6em;
         right: 1em;
     }
     #buttonLock{
         position:fixed;
-        bottom:2.5em;
+        bottom:3.5em;
         right:1em;
     }
     #buttonUnlock {
         position: fixed;
-        bottom: 2.5em;
+        bottom: 3.5em;
         right: 1em;
         visibility: hidden; /* Initially hidden */
     }
+    #buttonSave {
+        position: fixed;
+        bottom: 1em;
+        right: 1em;
+    }
 </style>
 
+<!-- title -->
 <h1 style="text-align:center;">@Model.Name</h1>
 <hr></hr>
+
+<!-- edit dashboard -->
 <div id="buttonEdit">
     <form action="/Dashboard/@Model.Id/Edit" method="get">
         <button type="submit" class="btn btn-primary"><i class="bi bi-gear-fill"></i></button>
@@ -68,7 +98,14 @@
 <div id="buttonUnlock">
     <button onclick="unlock()" class="btn btn-primary"><i class="bi bi-lock-fill"></i></button>
 </div>
-
+<!-- save grid -->
+<div id="buttonSave">
+    <button onclick="save()" class="btn btn-primary"><i class="bi bi-floppy-fill"></i></button>
+</div>
+<!-- show saved serialization data (debug purposes) 
+<textarea id="saved-data" style="width: 100%" cols="100" rows="20" readonly="readonly"></textarea>
+-->
+<!-- display widgets-->
 @if(Model.Widgets != null)
 {
         <div class="grid-stack">
@@ -78,6 +115,7 @@
                 {
                 <div class="grid-stack-item" id="@widget.Name"
                          @Html.Raw(widget.Properties)
+                         gs-id="@widget.Id"
                          gs-locked="true"
                          gs-x="@widget.X"
                          gs-y="@widget.Y"

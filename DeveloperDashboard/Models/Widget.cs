@@ -7,11 +7,13 @@ namespace DeveloperDashboard.Models
     {
         [JsonIgnore]
         public int Id { get; set; }
+        [JsonIgnore]
+        public bool Template { get; set; }
 
         [JsonIgnore]
         public string Name { get; set; }
 
-        [JsonProperty(Order = -2)]
+        [JsonIgnore]
         public string Content { get; set; }
 
         [JsonProperty(Order = -4)]
