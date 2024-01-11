@@ -20,7 +20,7 @@ My project is called Developer Dashboard, the idea to put it simply is to emulat
 * [TinyUrl](https://tinyurl.com/app/dev)
 * [VisualCrossing](https://www.visualcrossing.com/weather-api)
 * [PostgreSQL](https://www.postgresql.org/)
-
+* [Gridstack.js](https://gridstackjs.com/)
 ## Author
 |<img src="https://github.com/jeremy-kimball.png?"> |
 |:----:|
