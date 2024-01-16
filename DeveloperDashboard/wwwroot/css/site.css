@@ -17,11 +17,12 @@ body {
   margin-bottom: 60px;
 }
 #Weather {
-    background-color: red;
+    background-color: #274C77;
 }
 #Url_Shortener {
-    background-color: green;
+    background-color: #6096BA;
 }
 #Google_Search {
-    background-color: blue;
+    background-color: #A3CEF1;
 }
+
