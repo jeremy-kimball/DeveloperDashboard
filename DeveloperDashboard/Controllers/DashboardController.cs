@@ -98,11 +98,11 @@ namespace DeveloperDashboard.Controllers
         public IActionResult Edit(int id)
         {
             var dashboard = _context.Dashboards.Include(d => d.Widgets).First(d => d.Id == id);
-            var widgetList = _context.Widgets.ToList();
-            var dashboardWidgets = dashboard.Widgets.Select(w => w.Id).ToList();
+            var widgetList = _context.Widgets.Where(w => w.Template == true).ToList();
+            var dashboardWidgets = dashboard.Widgets.Select(w => w.Name).ToList();
 
             ViewBag.widgetBag = widgetList;
-            ViewBag.dashboardWidgetIds = dashboardWidgets;
+            ViewBag.dashboardWidgets = dashboardWidgets;
 
             return View(dashboard);
         }

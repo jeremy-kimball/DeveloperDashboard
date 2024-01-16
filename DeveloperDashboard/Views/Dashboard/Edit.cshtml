@@ -1,7 +1,7 @@
 ﻿@model Dashboard
 @{
     var widgetList = ViewBag.widgetBag as IEnumerable<Widget>;
-    var dashboardWidgetIds = ViewBag.dashboardWidgetIds as List<int>;
+    var dashboardWidgets = ViewBag.dashboardWidgets as List<String>;
 }
 <form action="/Dashboard/@Model.Id/Update" method="post">
     <input type="hidden" id="Id" name="Id" value="@Model.Id">
@@ -16,7 +16,7 @@
             <input type="checkbox"
                    name="selectedWidgetIds"
                    value="@widget.Id"
-            @(dashboardWidgetIds.Contains(widget.Id) ? "checked" : "") />
+            @(dashboardWidgets.Contains(widget.Name) ? "checked" : "") />
             @Html.DisplayFor(_ => widget.Name)
         </div>
         }
