@@ -8,7 +8,8 @@
 
     document.addEventListener('DOMContentLoaded', function () {
         gridStackInstance = GridStack.init({
-            minRow: 10
+            minRow: 10,
+            sizeToContent: true
         });
         //for debug
         //console.log("GridStack instance:", gridStackInstance);
@@ -18,9 +19,24 @@
         // and show the grid lock button correctly
         document.getElementById('buttonLock').style.visibility = 'hidden';
         document.getElementById('buttonUnlock').style.visibility = 'visible';
+
+        gridStackInstance.on('dragstart', function (event, el) {
+            $('#myGrid').css('background-color', 'rgba(95, 95, 95, 0.18)'); // Change the color as needed
+        });
+        
+        gridStackInstance.on('dragstop', function (event, el) {
+            $('#myGrid').css('background-color', ''); // Resets to original or you can set a specific color
+        });
+
+
     });
 
-
+    function changeButtonColor(button) {
+        $(button).addClass('green-background grow-shrink');
+        setTimeout(() => {
+            $(button).removeClass('green-background grow-shrink');
+        }, 500);
+    }
 
     function lock() {
         if (!gridStackInstance) {
@@ -40,7 +56,7 @@
         document.getElementById('buttonUnlock').style.visibility = 'hidden';
         document.getElementById('buttonLock').style.visibility = 'visible';
     }
-    function save() {
+    function save(button) {
 
         serializedData = gridStackInstance.save();
         //document.querySelector('#saved-data').value = JSON.stringify(serializedData, null, '  ');
@@ -53,10 +69,11 @@
                 id: @Model.Id
             },
             success: function () {
-                alert("Grid Saved!");
+                changeButtonColor(button);
             },
             error: function (xhr, status, error) {
                 var errorMessage = "Error: " + xhr.status + " " + xhr.statusText;
+                alert("Save Unsuccessfull!");
                 $('#linkContainer').html(errorMessage);
             }
         });
@@ -68,24 +85,44 @@
 <style>
     #buttonEdit{
         position: fixed;
-        bottom: 6em;
+        bottom: 9em;
         right: 1em;
     }
     #buttonLock{
         position:fixed;
-        bottom:3.5em;
+        bottom:6.5em;
         right:1em;
     }
     #buttonUnlock {
         position: fixed;
-        bottom: 3.5em;
+        bottom: 6.5em;
         right: 1em;
         visibility: hidden; /* Initially hidden */
     }
     #buttonSave {
         position: fixed;
-        bottom: 1em;
+        bottom: 4em;
         right: 1em;
+    }
+    #savebtn:focus{
+        outline: none !important;
+        box-shadow: none !important;
+        background-color: green !important;
+    }
+    .green-background {
+        background-color: green !important;
+    }
+    @@keyframes growShrink {
+        0%, 100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(2); /* Adjust scale value to control growth size */
+        }
+    }
+    .grow-shrink {
+        animation: growShrink 0.5s;
     }
 </style>
 
@@ -109,7 +146,7 @@
 </div>
 <!-- save grid -->
 <div id="buttonSave">
-    <button onclick="save()" class="btn btn-primary"><i class="bi bi-floppy-fill"></i></button>
+    <button id="savebtn" onclick="save(this);" class="btn btn-primary"><i class="bi bi-floppy-fill"></i></button>
 </div>
 <!-- show saved serialization data (debug purposes) 
 <textarea id="saved-data" style="width: 100%" cols="100" rows="20" readonly="readonly"></textarea>
@@ -117,7 +154,7 @@
 <!-- display widgets-->
 @if(Model.Widgets != null)
 {
-        <div class="grid-stack">
+        <div id="myGrid" class="grid-stack">
             @if (Model.Widgets != null)
             {
                 foreach (var widget in Model.Widgets)

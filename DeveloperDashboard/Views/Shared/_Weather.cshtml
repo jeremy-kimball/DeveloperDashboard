@@ -1,11 +1,46 @@
 ﻿<script type="text/javascript">
+    // Function to set a cookie
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // Function to get a cookie
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    // Load the location from the cookie when the page loads
+    $(document).ready(function () {
+        var savedLocation = getCookie("location");
+        if (savedLocation) {
+            $('#locInput').val(savedLocation);
+            getWeather();
+        }
+    });
+
     function getWeather() {
         var location = $('#locInput').val();
+
+        // Save the location in a cookie
+        setCookie("location", location, 7); // Save for 7 days
 
         $.ajax({
             url: '@Url.Action("GetWeather", "Widget")',
             type: 'POST',
-            data: { location: location},
+            data: { location: location },
             success: function (partialViewResult) {
                 $('#weatherContainer').html(partialViewResult);
             },

@@ -19,9 +19,10 @@
 </script>
 
 <div>
-    <input type="text" class="form-control" id="linkInput" placeholder="Enter Link" aria-label="Link Form" aria-describedby="button-addon2">
-    <button class="btn btn-primary" type="button" onclick="shortenLink()" id="button-addon2">Shorten</button>
-
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" id="linkInput" placeholder="Enter Link" aria-label="Link Form" aria-describedby="button-addon2">
+        <button class="btn btn-primary" type="button" id="button-addon2" onclick="shortenLink()">Shorten</button>
+    </div>
     <div id="linkContainer">
         @Html.Partial("_ShortenedLinkPartial")
     </div>
